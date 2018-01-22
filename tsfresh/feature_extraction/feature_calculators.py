@@ -1813,3 +1813,40 @@ def energy_ratio_by_chunks(x, param):
         res_index.append("num_segments_{}__segment_focus_{}".format(num_segments, segment_focus))
 
     return list(zip(res_index, res_data)) # Materialize as list for Python 3 compatibility with name handling
+
+
+@set_property("fctype", "simple")
+def rise_time(x):
+    """
+    Returns the (normalized) time it takes to get to the peak (maximum) value
+
+    :param x: the time series to calculate the feature of
+    :return type: float
+    """
+    ind = np.argmax(x)
+
+    rise = ind / len(x)
+
+    return rise
+
+
+@set_property("fctype", "simple")
+def decay_time(x):
+    """
+    Returns a measure of decay from the maximum value to the end of the timeseries. We calculate the difference from
+    the peak to the end (how much did it drop?) and normalize it by the time it took.
+
+    :param x: the time series to calculate the feature of
+    :return type: float
+    """
+
+    max_value = np.max(x)
+    max_ind = np.argmax(x)
+
+    last_value = x[-1]
+
+    decay_time = len(x) - max_ind
+
+    decay = (max_value - last_value) / decay_time
+
+    return decay
