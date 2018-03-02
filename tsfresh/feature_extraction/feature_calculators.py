@@ -1824,6 +1824,9 @@ def rise_time(x):
     :return type: float
     """
     ind = np.argmax(x)
+   
+    if ind == 0:
+         ind = 1
 
     rise = ind / len(x)
 
