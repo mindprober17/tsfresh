@@ -1828,7 +1828,7 @@ def rise_time(x):
     if ind == 0:
          ind = 1
 
-    rise = ind / len(x)
+    rise = ind / len(x) * 100
 
     return rise
 
@@ -1845,11 +1845,19 @@ def decay_time(x):
 
     max_value = np.max(x)
     max_ind = np.argmax(x)
+    
+    new_array = x[max_ind:]
+    
+    to_regress = np.arange(len(new_array))
+      
+    slope, intercept, r_value, p_value, std_err = linregress(to_regress,new_array)
+   
+    decay = slope * 100
 
-    last_value = x[-1]
+#     last_value = x[-1]
 
-    decay_time = len(x) - max_ind
+#     decay_time = len(x) - max_ind
 
-    decay = (max_value - last_value) / decay_time
+#     decay = (max_value - last_value) / decay_time
 
     return decay
