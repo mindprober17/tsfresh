@@ -1036,7 +1036,8 @@ def number_peaks(x, n):
             res &= result_first
 
         res &= (x_reduced > np.roll(x, -i)[n:-n])
-    return np.sum(res)
+    # Quick tweak for our purposes
+    return np.sum(res) / len(x) * 100
 
 
 @set_property("fctype", "combiner")
