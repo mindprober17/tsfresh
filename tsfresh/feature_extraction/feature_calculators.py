@@ -1853,8 +1853,8 @@ def decay_time(x):
       
     slope, intercept, r_value, p_value, std_err = linregress(to_regress,new_array)
    
-    decay = -(np.arctan(slope) * (180/np.pi))
+    decay = (np.arctan(slope) * (180/np.pi))
     
-    decay = decay/90*100
+    decay = abs(decay/90*100)
 
     return decay
