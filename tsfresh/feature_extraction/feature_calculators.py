@@ -1837,8 +1837,8 @@ def rise_time(x):
 @set_property("fctype", "simple")
 def decay_time(x):
     """
-    Returns a measure of decay from the maximum value to the end of the timeseries. We calculate the difference from
-    the peak to the end (how much did it drop?) and normalize it by the time it took.
+    Returns a measure of decay from the maximum value to the end of the timeseries. We take the slope of the signal,
+    convert to degrees and rescale from 0-100
 
     :param x: the time series to calculate the feature of
     :return type: float
@@ -1853,12 +1853,8 @@ def decay_time(x):
       
     slope, intercept, r_value, p_value, std_err = linregress(to_regress,new_array)
    
-    decay = slope * 100
-
-#     last_value = x[-1]
-
-#     decay_time = len(x) - max_ind
-
-#     decay = (max_value - last_value) / decay_time
+    decay = -(np.arctan(slope) * (180/np.pi))
+    
+    decay = decay/90*100
 
     return decay
